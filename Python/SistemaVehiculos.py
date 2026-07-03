@@ -1,124 +1,144 @@
-carros = []
+import os
+import json
 
-def crear_carro():
-    carro = {
+def crear_vehiculo():
+    vehiculo = {
             'placa' : input("Ingrese la placa del vehiculo: "),
             'owner' : input("Ingrese el nombre del dueño: "),
             'color' : input("Ingrese el color del vehiculo: "),
             'modelo' : input("Ingrese el modelo del vehiculo: ")
             }
     
-    print("carro creado con exito")
-    return carro
+    print("vehiculo creado con exito")
+    return vehiculo
 
-def imprimir_carro(lista_carros, dato, i = None):
+def imprimir_vehiculo(lista_vehiculos, dato, i = None):
     
     if type(dato) == int:
-        print(f"carro de {lista_carros[dato]["owner"]}")
-        print(f"Placa: {lista_carros[dato]["placa"]}")
-        print(f"Color: {lista_carros[dato]["color"]}")
-        print(f"Modelo: {lista_carros[dato]["modelo"]}")
+        print(f"vehiculo de {lista_vehiculos[dato]["owner"]}")
+        print(f"Placa: {lista_vehiculos[dato]["placa"]}")
+        print(f"Color: {lista_vehiculos[dato]["color"]}")
+        print(f"Modelo: {lista_vehiculos[dato]["modelo"]}")
         
     elif type(dato) == str:
-        print(f"carro de {lista_carros[i]["owner"]}")
-        print(f"Placa: {lista_carros[i]["placa"]}")
-        print(f"Color: {lista_carros[i]["color"]}")
-        print(f"Modelo: {lista_carros[i]["modelo"]}")
+        print(f"vehiculo de {lista_vehiculos[i]["owner"]}")
+        print(f"Placa: {lista_vehiculos[i]["placa"]}")
+        print(f"Color: {lista_vehiculos[i]["color"]}")
+        print(f"Modelo: {lista_vehiculos[i]["modelo"]}")
     
-def menu_carros():
-    print("========== Menu De Carros ===========")
-    print("1. agregar carros")
-    print("2. editar carros")
-    print("3. buscar carros")
-    print("4. mostrar carros")
-    print("5. listar carros")
-    print("6. eliminar carro")
+def menu_vehiculos():
+    print("========== Menu De vehiculos ===========")
+    print("1. agregar vehiculos")
+    print("2. editar vehiculos")
+    print("3. buscar vehiculos")
+    print("4. mostrar vehiculos")
+    print("5. listar vehiculos")
+    print("6. eliminar vehiculo")
     print("7. salir")
     
     try:
         opcion = int(input("ingrese una opcion....\n"))
         return opcion
-    except:
+    except Exception:
         print("solo se aceptan numeros")
         return
         
-def agregar_carros(lista_carros):
-    carro = crear_carro()
+def agregar_vehiculos(lista_vehiculos):
+    vehiculo = crear_vehiculo()
     
-    for i in lista_carros:
-        if i["placa"] == carro["placa"]:
-            print(f"El carro con la placa {i["placa"]} ya se encuentra registrado")
+    for i in lista_vehiculos:
+        if i["placa"] == vehiculo["placa"]:
+            print(f"El vehiculo con la placa {i["placa"]} ya se encuentra registrado")
             return
         
-    lista_carros.append(carro)
-    print(f"carro guardado con exito con la placa {carro['placa']}")
+    lista_vehiculos.append(vehiculo)
+    print(f"vehiculo guardado con exito con la placa {vehiculo['placa']}")
         
-def editar_carros(lista_carros):
-    if not lista_carros:
-        print("lo sentimos no hay carros para editar")
+def editar_vehiculos(lista_vehiculos):
+    if not lista_vehiculos:
+        print("lo sentimos no hay vehiculos para editar")
         return
     
-    num = mostrar_detalles_carros(lista_carros)
+    num = mostrar_detalles_vehiculos(lista_vehiculos)
     
     atributo = input("Escriba abajo la caracteristica  que desea editar: [placa] [owner] [color] [modelo] \n")
     valor = input("Ingrese el nuevo la nueva caracteristica...\n")
     try:
-        lista_carros[num][atributo] = valor
-    except:
-        print("Error al editar el carro, elija una caracteristica de la lista...")
+        lista_vehiculos[num][atributo] = valor
+    except Exception:
+        print("Error al editar el vehiculo, elija una caracteristica de la lista...")
     
-def eliminar_carros(lista_carros):
-    if not list:
-        print("lo sentimos no hay carros para eliminar")
+def eliminar_vehiculos(lista_vehiculos):
+    if not lista_vehiculos:
+        print("lo sentimos no hay vehiculos para eliminar")
         return
     
-    listar_carros(lista_carros)
-    num = int(input("ingrese el numero del carro que desea eliminar... \n"))
-    lista_carros.pop(num-1)
+    listar_vehiculos(lista_vehiculos)
+    num = int(input("ingrese el numero del vehiculo que desea eliminar... \n"))
+    lista_vehiculos.pop(num-1)
 
-def listar_carros(lista_carros):
-    if not list:
-        print("lo sentimos no hay carros para mostrar")
+def listar_vehiculos(lista_vehiculos):
+    if not lista_vehiculos:
+        print("lo sentimos no hay vehiculos para mostrar")
         return
     
-    for index, i in enumerate(lista_carros, start= 1):
+    for index, i in enumerate(lista_vehiculos, start= 1):
         print(f"{index}. {i["placa"]} - {i["modelo"]}")
         
-def mostrar_detalles_carros(lista_carros):
-    listar_carros(lista_carros)
+def mostrar_detalles_vehiculos(lista_vehiculos):
+    listar_vehiculos(lista_vehiculos)
     try:
-        num = int(input("Ingrese el numero del carro al que desea ver detalles... \n"))-1
-        imprimir_carro(lista_carros, num)
+        num = int(input("Ingrese el numero del vehiculo al que desea ver detalles... \n"))-1
+        imprimir_vehiculo(lista_vehiculos, num)
         return num
-    except:
+    except Exception:
         print("Solo se aceptan numeros, intentelo de nuevo")
         return
  
-def buscar_carro_placas(lista_carros):
-    placa = input("Ingrese las placas del carro a buscar... \n")
-    for indice, i in enumerate(lista_carros, start=0):
+def buscar_vehiculo_placas(lista_vehiculos):
+    placa = input("Ingrese las placas del vehiculo a buscar... \n")
+    for indice, i in enumerate(lista_vehiculos, start=0):
         if i["placa"] == placa:
-            imprimir_carro(lista_carros, placa, indice)
+            imprimir_vehiculo(lista_vehiculos, placa, indice)
             return
-        print(f"la placa {placa} no se encuentra registrada")
+    print(f"la placa {placa} no se encuentra registrada")
+
+def loadJSON(archivo):
+    with open(archivo, "r") as bd:
+        vehiculos = json.load(bd)
+    return vehiculos
+
+def saveJSON(archivo, vehiculos):
+    with open(archivo, "w") as bd:
+        json.dump(vehiculos, bd, indent= 4)
         
+archivo = "Vehiculos.json"
+
+if os.path.exists(archivo):
+   vehiculos = loadJSON(archivo)
+else:
+    vehiculos = []
+
 while True:
     
-    opcion = menu_carros()
+    opcion = menu_vehiculos()
     
     match opcion:
         case 1:
-            agregar_carros(carros)
+            agregar_vehiculos(vehiculos)
+            saveJSON(archivo, vehiculos)
         case 2:
-            editar_carros(carros)
+            editar_vehiculos(vehiculos)
+            saveJSON(archivo, vehiculos)
         case 3:
-            buscar_carro_placas(carros)
+            buscar_vehiculo_placas(vehiculos)
         case 4:
-            mostrar_detalles_carros(carros)
+            mostrar_detalles_vehiculos(vehiculos)
         case 5:
-            listar_carros(carros)
+            listar_vehiculos(vehiculos)
         case 6:
-            eliminar_carros(carros)
+            eliminar_vehiculos(vehiculos)
+            saveJSON(archivo, vehiculos)
         case 7:
             break
         

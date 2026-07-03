@@ -1,3 +1,6 @@
+import os
+import json
+
 def crear_estudiante():
     try:
         estudiante = {
@@ -85,6 +88,15 @@ def editar_estudiante(lista_estudiantes):
         print("Por favor elija un atributo de la lista y recuerde que la edad solo permite numeros")
         return
 
+def saveJSON(archivo, estudiantes):
+    with open(archivo, "w") as bd:
+        json.dump(estudiantes, bd, indent= 4)
+
+def loadJSON(archivo):
+    with open(archivo, "r")as bd:
+        estudiantes = json.load(bd)
+        return estudiantes
+            
 def menu_estudiantes():
     print("\n==== SISTEMA DE ESTUDIANTES ====")
     print("1. Agregar estudiante")
@@ -94,8 +106,15 @@ def menu_estudiantes():
     print("5. Editar estudiantes")
     print("6. salir")
 
-estudiantes = []
+archivo = "Estudiantes.json"
 
+if os.path.exists(archivo):
+    estudiantes = loadJSON(archivo)
+  
+else:
+    estudiantes = []
+    
+    
 while True:
     
     menu_estudiantes()
@@ -104,22 +123,26 @@ while True:
         opcion = int(input("Seleccione una opcion: \n"))
     except:
         print("Elija un numero del menu >:(")
+        continue
     
     match opcion:
         case 1:
             agregar_estudante(estudiantes)
+            saveJSON(archivo, estudiantes)
         case 2:
             listar_estudiantes(estudiantes)
         case 3:
             eliminar_estudiantes(estudiantes)
+            saveJSON(archivo, estudiantes)
         case 4:
             buscar_estudiante(estudiantes)
         case 5:
             editar_estudiante(estudiantes)
+            saveJSON(archivo, estudiantes)
         case 6:
             break
 
-            
+
             
     
     
